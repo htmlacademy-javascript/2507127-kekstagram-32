@@ -7,6 +7,9 @@ function getRandomInteger (min, max) {
   return Math.floor(result);
 }
 
+//Проверка на нажатую клавишу ESC
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
 //Проверка длины строки
 function stringCheck(string, maxLength){
   return string.length <= maxLength;
@@ -34,4 +37,4 @@ function getNumbers(string){
   return result;
 }
 
-export {getRandomInteger, stringCheck, isPalindrome, getNumbers};
+export {getRandomInteger, stringCheck, isPalindrome, getNumbers, isEscapeKey};
