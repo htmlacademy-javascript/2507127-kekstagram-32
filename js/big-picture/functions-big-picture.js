@@ -11,10 +11,16 @@ function getCurrentThumbnailData(dataArray, currentThumbnail){
 }
 
 //Рендер комментариев
-function renderComments(data, container){
-  const comments = data.comments;
+function renderComments(data, startNumber, endNumber, container){
+  if (data.comments.length === 0) {
+    return;
+  }
+  if (data.comments.length < 5) {
+    endNumber = data.comments.length;
+  }
+  const slicedDataComments = data.comments.slice(startNumber, endNumber);
 
-  comments.forEach(({avatar, message, name}) => {
+  slicedDataComments.forEach(({avatar, message, name}) => {
     const commentTemplate = `
         <li class="social__comment">
           <img

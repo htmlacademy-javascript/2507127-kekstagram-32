@@ -3,11 +3,14 @@ import { renderComments, getCurrentThumbnailData } from './functions-big-picture
 
 let currentThumbnailData;
 
+let sliceCommentsStartNumber = 0;
+let sliceCommentsEndNumber = 5;
+
 const bigPicture = document.querySelector('.big-picture');
 //Дочерние элементы bigPicture
-
+const commentsShownCount = bigPicture.querySelector('.social__comment-shown-count');
+const commentsTotalCount = bigPicture.querySelector('.social__comment-total-count');
 const commentsContainer = bigPicture.querySelector('.social__comments');
-const commentsCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 
 
@@ -19,22 +22,55 @@ function putDataIntoBigPicture(data){
 
   modalImage.src = data.url;
   modalLikes.textContent = data.likes;
+  commentsShownCount.textContent = data.comments.length < sliceCommentsEndNumber ? data.comments.length : sliceCommentsEndNumber;
+  commentsTotalCount.textContent = data.comments.length;
   modalDescription.textContent = data.description;
 }
 
+//Проверка на полную загрузку комментариев
+function isCommentsFullLoaded(){
+  if (currentThumbnailData.comments.length <= sliceCommentsEndNumber) {
+    commentsLoader.removeEventListener('click', renderNumberOfComments);
+    commentsLoader.classList.add('hidden');
+  }
+}
+
+//Рендер комментариев при нажатии на "Загрузить еще"
+function renderNumberOfComments(){
+  if (currentThumbnailData.comments.length === sliceCommentsEndNumber) {
+    commentsLoader.removeEventListener('click', renderNumberOfComments);
+    return;
+  }
+
+  if (currentThumbnailData.comments.length >= sliceCommentsEndNumber + 5) {
+    sliceCommentsStartNumber += 5;
+    sliceCommentsEndNumber += 5;
+  } else {
+    sliceCommentsStartNumber = currentThumbnailData.comments.length - (currentThumbnailData.comments.length - sliceCommentsEndNumber);
+    sliceCommentsEndNumber = currentThumbnailData.comments.length;
+  }
+
+  renderComments(currentThumbnailData, sliceCommentsStartNumber, sliceCommentsEndNumber, commentsContainer);
+  commentsShownCount.textContent = sliceCommentsEndNumber;
+
+  isCommentsFullLoaded();
+}
+
 function renderBigPicture(currentThumbnail){
+  sliceCommentsStartNumber = 0;
+  sliceCommentsEndNumber = 5;
+
   currentThumbnailData = getCurrentThumbnailData(randomDataArray, currentThumbnail);
 
   putDataIntoBigPicture(currentThumbnailData);
 
   commentsContainer.innerHTML = '';
-  renderComments(currentThumbnailData, commentsContainer);
+  commentsLoader.addEventListener('click', renderNumberOfComments);
+  renderComments(currentThumbnailData, sliceCommentsStartNumber, sliceCommentsEndNumber, commentsContainer);
 
+  commentsLoader.classList.remove('hidden');
+  isCommentsFullLoaded();
 }
-
-//Сокрытие счетчика комментариев и кнопки "загрузить еще"
-commentsCount.classList.add('hidden');
-commentsLoader.classList.add('hidden');
 
 
 export {bigPicture, renderBigPicture};
