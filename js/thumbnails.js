@@ -1,25 +1,29 @@
 import {createDataArray} from './data.js';
 
-function renderThumbnails(){
+const randomDataArray = createDataArray();
+const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const container = document.querySelector('.pictures');
 
-  const randomDataArray = createDataArray();
+function createThumbnail({url,description,likes,comments}) {
+  const thumbnail = thumbnailTemplate.cloneNode(true);
 
-  const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-  const picturesList = document.querySelector('.pictures');
+  thumbnail.querySelector('.picture__img').src = url;
+  thumbnail.querySelector('.picture__img').alt = description;
+  thumbnail.querySelector('.picture__comments').textContent = comments.length;
+  thumbnail.querySelector('.picture__likes').textContent = likes;
 
-  const picturesListFragment = document.createDocumentFragment();
-
-  randomDataArray.forEach(({url,description,likes,comments}) =>{
-    const pictureElement = pictureTemplate.cloneNode(true);
-    pictureElement.querySelector('.picture__img').src = url;
-    pictureElement.querySelector('.picture__img').alt = description;
-    pictureElement.querySelector('.picture__comments').textContent = comments.length;
-    pictureElement.querySelector('.picture__likes').textContent = likes;
-
-    picturesListFragment.appendChild(pictureElement);
-  });
-
-  picturesList.appendChild(picturesListFragment);
+  return thumbnail;
 }
 
-export {renderThumbnails};
+function renderThumbnails(){
+  const fragment = document.createDocumentFragment();
+
+  randomDataArray.forEach((picture) =>{
+    const thumbnail = createThumbnail(picture);
+    fragment.append(thumbnail);
+  });
+
+  container.appendChild(fragment);
+}
+
+export {randomDataArray, renderThumbnails};
