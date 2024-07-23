@@ -5,7 +5,7 @@ const thumbnailsList = document.querySelector('.pictures');
 const closeModalButton = document.querySelector('.big-picture__cancel');
 
 function onDocumentKeydown(evt) {
-  if (isEscapeKey) {
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
     onCloseModal();
   }
@@ -17,6 +17,7 @@ function onOpenModal(element){
 
   renderBigPicture(element);
 
+  closeModalButton.addEventListener('click', onCloseModal);
   document.addEventListener('keydown', onDocumentKeydown);
 }
 
@@ -24,6 +25,7 @@ function onCloseModal(){
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
+  closeModalButton.removeEventListener('click', onCloseModal);
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
@@ -34,6 +36,3 @@ thumbnailsList.addEventListener('click', (evt) =>{
   }
 });
 
-closeModalButton.addEventListener('click', ()=> {
-  onCloseModal();
-});
