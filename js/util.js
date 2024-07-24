@@ -39,7 +39,7 @@ function getNumbers(string){
 
 //Создание массива элементов из значения инпута
 function getArrayFromStingValue (inputField) {
-  const arr = inputField.value.trim().split(' ');
+  const arr = inputField.value.toLowerCase().trim().split(' ');
 
   //Фильтрация на случай, если между элементами будет больше 1 пробела
   const filteredArr = arr.filter((item) => item !== '');

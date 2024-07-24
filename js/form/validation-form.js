@@ -1,7 +1,9 @@
 import { getArrayFromStingValue } from '../util.js';
+const MAX_HASHTAG_COUNT = 5;
+const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const form = document.querySelector('.img-upload__form');
-const hashtagsField = document.querySelector('.text__hashtags');
+const hashtagsField = form.querySelector('.text__hashtags');
 
 
 const pristine = new Pristine(form, {
@@ -15,11 +17,12 @@ const pristine = new Pristine(form, {
 //Получение массива из значения инпута. Объявил функцию, так как переменная будет содержать неактуальное значение
 const getHashstagsArray = () => getArrayFromStingValue(hashtagsField);
 
+
 //Проверка на кол-во хэштегов
 function validateHashtagsAmount(){
   const hashtagsArrayLength = hashtagsField.value ? getHashstagsArray().length : 0;
 
-  return hashtagsArrayLength <= 5;
+  return hashtagsArrayLength <= MAX_HASHTAG_COUNT;
 }
 
 //Проверка на повторяющиеся хэштэги
@@ -31,9 +34,7 @@ function checkForHashtagsDuplicates() {
 
 //Проверка самих хэштегов
 function validateHashtags() {
-  const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
-
-  return hashtagsField.value.length > 0 ? getHashstagsArray().every((hashtag) => regexp.test(hashtag)) : true;
+  return hashtagsField.value.length > 0 ? getHashstagsArray().every((hashtag) => VALID_SYMBOLS.test(hashtag)) : true;
 }
 
 pristine.addValidator(hashtagsField, validateHashtagsAmount, 'Не больше 5 хэштегов');
