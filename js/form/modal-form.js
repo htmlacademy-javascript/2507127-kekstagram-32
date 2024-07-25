@@ -1,5 +1,7 @@
 import { isEscapeKey } from '../util.js';
 import './validation-form.js';
+import { addEditImageListeners, removeEditImageListeners } from './resize-image-form.js';
+import { createSlider, destroySlider } from './slider-form.js';
 
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadInput = document.querySelector('.img-upload__input');
@@ -23,6 +25,8 @@ function showImageForm() {
   document.addEventListener('keydown', onDocumentKeydown);
   uploadCancel.addEventListener('click', closeImageForm);
 
+  addEditImageListeners();
+  createSlider();
 }
 
 function closeImageForm(){
@@ -33,6 +37,9 @@ function closeImageForm(){
   uploadCancel.removeEventListener('click', closeImageForm);
 
   uploadInput.value = '';
+
+  removeEditImageListeners();
+  destroySlider();
 }
 
 uploadInput.addEventListener('change', showImageForm);
