@@ -1,4 +1,5 @@
 import { imagePreview } from './resize-image-form.js';
+import { SLIDER_SETTINGS } from './slider-settings-form.js';
 
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const sliderElement = document.querySelector('.effect-level__slider');
@@ -52,82 +53,35 @@ function createSlider(){
   sliderContainer.classList.add('hidden');
 }
 
-function changePictureFilter(input) {
+function changeOptions(settings) {
   const sliderValue = sliderElement.noUiSlider.get();
+
+  currentFilter = settings.filter;
+  currentMeasure = settings.measure;
+  imagePreview.style.filter = `${currentFilter}(${sliderValue}${currentMeasure})`;
+  sliderElement.noUiSlider.updateOptions(settings.options);
+}
+
+function changePictureFilter(input) {
   switch (input.value) {
     case 'chrome':
-      currentFilter = 'grayscale';
-      currentMeasure = '';
-      imagePreview.style.filter = `${currentFilter}(${sliderValue}${currentMeasure})`;
-
-      sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1,
-        },
-        start: 1,
-        step: 0.1
-      });
+      changeOptions(SLIDER_SETTINGS.chrome);
       break;
 
     case 'sepia':
-      currentFilter = 'sepia';
-      currentMeasure = '';
-      imagePreview.style.filter = `${currentFilter}(${sliderValue}${currentMeasure})`;
-
-      sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1,
-        },
-        start: 1,
-        step: 0.1
-      });
+      changeOptions(SLIDER_SETTINGS.sepia);
       break;
 
     case 'marvin':
-      currentFilter = 'invert';
-      currentMeasure = '%';
-      imagePreview.style.filter = `${currentFilter}(${sliderValue}${currentMeasure})`;
-
-      sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 100,
-        },
-        start: 100,
-        step: 1
-      });
+      changeOptions(SLIDER_SETTINGS.marvin);
       break;
 
     case 'phobos':
-      currentFilter = 'blur';
-      currentMeasure = 'px';
-      imagePreview.style.filter = `${currentFilter}(${sliderValue}${currentMeasure})`;
-
-      sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 3,
-        },
-        start: 3,
-        step: 0.1
-      });
+      changeOptions(SLIDER_SETTINGS.phobos);
       break;
 
     case 'heat':
-      currentFilter = 'brightness';
-      currentMeasure = '';
-      imagePreview.style.filter = `${currentFilter}(${sliderValue}${currentMeasure})`;
-
-      sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: 1,
-          max: 3,
-        },
-        start: 3,
-        step: 0.1
-      });
+      changeOptions(SLIDER_SETTINGS.heat);
       break;
 
     default:
