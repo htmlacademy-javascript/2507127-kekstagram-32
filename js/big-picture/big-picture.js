@@ -1,4 +1,4 @@
-import { randomDataArray } from '../thumbnails.js';
+import { fetchedData } from '../api.js';
 import { renderComments, getCurrentThumbnailData } from './functions-big-picture.js';
 
 let currentThumbnailData;
@@ -60,7 +60,7 @@ function renderBigPicture(currentThumbnail){
   sliceCommentsStartNumber = 0;
   sliceCommentsEndNumber = 5;
 
-  currentThumbnailData = getCurrentThumbnailData(randomDataArray, currentThumbnail);
+  currentThumbnailData = getCurrentThumbnailData(fetchedData, currentThumbnail);
 
   putDataIntoBigPicture(currentThumbnailData);
 
