@@ -1,6 +1,5 @@
-import {createDataArray} from './data.js';
+import { fetchedData } from './api.js';
 
-const randomDataArray = createDataArray();
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const container = document.querySelector('.pictures');
 
@@ -18,7 +17,7 @@ function createThumbnail({url,description,likes,comments}) {
 function renderThumbnails(){
   const fragment = document.createDocumentFragment();
 
-  randomDataArray.forEach((picture) =>{
+  fetchedData.forEach((picture) =>{
     const thumbnail = createThumbnail(picture);
     fragment.append(thumbnail);
   });
@@ -26,4 +25,4 @@ function renderThumbnails(){
   container.appendChild(fragment);
 }
 
-export {randomDataArray, renderThumbnails};
+export {renderThumbnails};

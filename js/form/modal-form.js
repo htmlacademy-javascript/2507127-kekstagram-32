@@ -1,16 +1,17 @@
 import { isEscapeKey } from '../util.js';
-import './validation-form.js';
 import { addEditImageListeners, removeEditImageListeners } from './resize-image-form.js';
 import { createSlider, destroySlider } from './slider-form.js';
+import { form } from './validation-form.js';
 
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadInput = document.querySelector('.img-upload__input');
 const uploadCancel = document.querySelector('.img-upload__cancel');
+const errorModal = document.querySelector('#error');
 
 
 function onDocumentKeydown(evt) {
   //Отмена события, если поле ввода в фокусе
-  const inputFocus = evt.target.matches('input.text__hashtags') || evt.target.matches('textarea');
+  const inputFocus = evt.target.matches('input.text__hashtags') || evt.target.matches('textarea') || evt.target === errorModal;
 
   if (isEscapeKey(evt) && !inputFocus) {
     evt.preventDefault();
@@ -40,6 +41,9 @@ function closeImageForm(){
 
   removeEditImageListeners();
   destroySlider();
+  form.reset();
 }
 
 uploadInput.addEventListener('change', showImageForm);
+
+export {closeImageForm };
