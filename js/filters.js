@@ -45,6 +45,9 @@ function changeFilter(button){
   }
 }
 
+//Использую debounce здесь, чтобы кнопки фильтра меняли активный класс без задержки
+const debouncedChangeFilter = debounce(changeFilter);
+
 function onChangeFilter(evt){
   //Условие, чтобы обработчик не сработал при нажатии на активную кнопку
   const isTargetButton = evt.target.closest('.img-filters__button') && !evt.target.closest('.img-filters__button').classList.contains(activeClass);
@@ -52,8 +55,7 @@ function onChangeFilter(evt){
     const targetButton = evt.target;
     changeActiveButton(evt);
 
-
-    changeFilter(targetButton);
+    debouncedChangeFilter(targetButton);
   }
 }
 
@@ -63,7 +65,7 @@ function renderFilteredThumbnails() {
 
     filtersContainer.classList.remove('img-filters--inactive');
 
-    filtersContainer.addEventListener('click', debounce(onChangeFilter));
+    filtersContainer.addEventListener('click', onChangeFilter);
   }
 }
 
