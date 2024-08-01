@@ -29,7 +29,6 @@ function changeActiveButton(evt) {
   evt.target.classList.add(activeClass);
 }
 
-
 //Смена фильтра
 function changeFilter(button){
   const choosenFilterId = button.id;
@@ -46,23 +45,25 @@ function changeFilter(button){
   }
 }
 
+function onChangeFilter(evt){
+  //Условие, чтобы обработчик не сработал при нажатии на активную кнопку
+  const isTargetButton = evt.target.closest('.img-filters__button') && !evt.target.closest('.img-filters__button').classList.contains(activeClass);
+  if (isTargetButton) {
+    const targetButton = evt.target;
+    changeActiveButton(evt);
+
+
+    changeFilter(targetButton);
+  }
+}
+
 function renderFilteredThumbnails() {
   if (fetchedData) {
     renderThumbnails(fetchedData);
 
     filtersContainer.classList.remove('img-filters--inactive');
 
-    filtersContainer.addEventListener('click', (evt) => {
-      //Условие, чтобы обработчик не сработал при нажатии на активную кнопку
-      const isTargetButton = evt.target.closest('.img-filters__button') && !evt.target.closest('.img-filters__button').classList.contains(activeClass);
-      if (isTargetButton) {
-        const targetButton = evt.target;
-        changeActiveButton(evt);
-
-        debounce(() => changeFilter(targetButton));
-      }
-    });
-
+    filtersContainer.addEventListener('click', debounce(onChangeFilter));
   }
 }
 

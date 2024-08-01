@@ -93,9 +93,7 @@ function debounce (callback, timeoutDelay = 500) {
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
-
   };
 }
-
 
 export { isEscapeKey, getArrayFromStingValue, showErrorMessage, showFetchMessage, getRandomElements, debounce};
