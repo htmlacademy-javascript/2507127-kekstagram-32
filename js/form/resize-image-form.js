@@ -24,6 +24,11 @@ function scaleImageBigger() {
   }
 }
 
+function resetImageScale() {
+  scaleControlInput.value = '100%';
+  imagePreview.style.transform = 'scale(1)';
+}
+
 function addEditImageListeners(){
   scaleControlSmaller.addEventListener('click', scaleImageSmaller);
   scaleControlBigger.addEventListener('click', scaleImageBigger);
@@ -32,6 +37,8 @@ function addEditImageListeners(){
 function removeEditImageListeners(){
   scaleControlSmaller.removeEventListener('click', scaleImageSmaller);
   scaleControlBigger.removeEventListener('click', scaleImageBigger);
+
+  resetImageScale();
 }
 
 export { addEditImageListeners, removeEditImageListeners, imagePreview };

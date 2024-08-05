@@ -44,4 +44,4 @@ async function sendData(body){
 
 const fetchedData = await getData();
 
-export { fetchedData, sendData };
+export { fetchedData, sendData, getData };
