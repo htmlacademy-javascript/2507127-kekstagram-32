@@ -3,8 +3,8 @@
 function getCurrentThumbnailData(dataArray, currentThumbnail){
   for(let i = 0; i < dataArray.length; i++) {
     const obj = dataArray[i];
-    const currentThumbnailImgUrl = currentThumbnail.querySelector('.picture__img').src;
-    if (currentThumbnailImgUrl.includes(obj.url)) {
+    const currentThumbnaillId = Number(currentThumbnail.dataset.thumbnailId);
+    if (currentThumbnaillId === obj.id) {
       return obj;
     }
   }
