@@ -1,4 +1,3 @@
-import { fetchedData } from './api.js';
 
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const container = document.querySelector('.pictures');
@@ -14,10 +13,17 @@ function createThumbnail({url,description,likes,comments}) {
   return thumbnail;
 }
 
-function renderThumbnails(){
+function removeThumbnails() {
+  const pictures = container.querySelectorAll('.picture');
+  pictures.forEach((picture) => picture.remove());
+}
+
+function renderThumbnails(data){
+  removeThumbnails();
+
   const fragment = document.createDocumentFragment();
 
-  fetchedData.forEach((picture) =>{
+  data.forEach((picture) =>{
     const thumbnail = createThumbnail(picture);
     fragment.append(thumbnail);
   });
