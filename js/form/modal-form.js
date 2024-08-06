@@ -21,7 +21,7 @@ function onDocumentKeydown(evt) {
 
   if (isEscapeKey(evt) && !inputFocus) {
     evt.preventDefault();
-    closeImageForm();
+    onCloseImageClick();
   }
 }
 
@@ -30,18 +30,18 @@ function showImageForm() {
   document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', onDocumentKeydown);
-  uploadCancel.addEventListener('click', closeImageForm);
+  uploadCancel.addEventListener('click', onCloseImageClick);
 
   addEditImageListeners();
   createSlider();
 }
 
-function closeImageForm(){
+function onCloseImageClick(){
   uploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
   document.removeEventListener('keydown', onDocumentKeydown);
-  uploadCancel.removeEventListener('click', closeImageForm);
+  uploadCancel.removeEventListener('click', onCloseImageClick);
 
   uploadInput.value = '';
 
@@ -67,4 +67,4 @@ function onUploadInputChange() {
 
 uploadInput.addEventListener('change', onUploadInputChange);
 
-export {closeImageForm };
+export { onCloseImageClick };
