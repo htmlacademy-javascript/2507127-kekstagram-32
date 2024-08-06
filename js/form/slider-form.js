@@ -49,7 +49,7 @@ function createSlider(){
     }
   });
 
-  effectsList.addEventListener('click', addPictureFilter);
+  effectsList.addEventListener('click', onImageFiltersClick);
   sliderContainer.classList.add('hidden');
 }
 
@@ -90,7 +90,7 @@ function changePictureFilter(input) {
   }
 }
 
-function addPictureFilter(evt) {
+function onImageFiltersClick(evt) {
   const itemInput = evt.target.closest('input[type="radio"]');
 
   if (itemInput){
@@ -102,7 +102,7 @@ function addPictureFilter(evt) {
 function destroySlider(){
   sliderElement.noUiSlider.destroy();
 
-  effectsList.removeEventListener('click', addPictureFilter);
+  effectsList.removeEventListener('click', onImageFiltersClick);
   resetEffectValues();
 }
 

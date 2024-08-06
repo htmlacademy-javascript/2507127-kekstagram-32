@@ -34,7 +34,7 @@ function validateTagsAmount(){
 
 //Проверка на повторяющиеся хэштэги
 function checkForTagsDuplicates() {
-  const duplicates = getTagsArray().filter((el, i, arr) => arr.indexOf(el) !== i);
+  const duplicates = getTagsArray().filter((tag, index, tags) => tags.indexOf(tag) !== index);
 
   return !(duplicates.length > 0);
 }

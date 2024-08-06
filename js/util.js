@@ -4,12 +4,12 @@ const isEscapeKey = (evt) => evt.key === 'Escape';
 
 //Создание массива элементов из значения инпута
 function getArrayFromStingValue (inputField) {
-  const arr = inputField.value.toLowerCase().trim().split(' ');
+  const values = inputField.value.toLowerCase().trim().split(' ');
 
   //Фильтрация на случай, если между элементами будет больше 1 пробела
-  const filteredArr = arr.filter((item) => item !== '');
+  const filteredValues = values.filter((item) => item !== '');
 
-  return filteredArr;
+  return filteredValues;
 }
 
 //Показ сообщения при ошибке загрузке данных
@@ -42,47 +42,47 @@ function showFetchMessage(message = 'Изображение успешно за�
   });
 
   //Закрытие при нажатии на ESC
-  const onkeydownDocument = (evt) =>{
+  const onDocumentKeydown = (evt) =>{
     evt.preventDefault();
     if(isEscapeKey(evt)) {
       clonedTemplate.remove();
       removeListeners();
     }
   };
-  document.addEventListener('keydown', onkeydownDocument);
+  document.addEventListener('keydown', onDocumentKeydown);
 
   //Закрытие по клику на произвольную область
-  const onClickDocument = (evt) => {
+  const onDocumentClick = (evt) => {
     if (evt.target !== clonedTemplateModal) {
       clonedTemplate.remove();
       removeListeners();
     }
   };
-  document.addEventListener('click', onClickDocument);
+  document.addEventListener('click', onDocumentClick);
 
   //Удаление обработчиков
   function removeListeners () {
-    document.removeEventListener('keydown', onkeydownDocument);
-    document.removeEventListener('click', onClickDocument);
+    document.removeEventListener('keydown', onDocumentKeydown);
+    document.removeEventListener('click', onDocumentClick);
   }
 
 }
 
 //Получение случайных данных из массива в указанном кол-ве
-function getRandomElements(array, number){
-  const randomArr = [];
+function getRandomElements(elements, number){
+  const randomElements = [];
 
   for(let i = 0; i <= number - 1; i++){
     let randomElement;
 
     do {
-      randomElement = array[Math.floor(Math.random() * array.length)];
-    } while (randomArr.includes(randomElement));
+      randomElement = elements[Math.floor(Math.random() * elements.length)];
+    } while (randomElements.includes(randomElement));
 
-    randomArr.push(randomElement);
+    randomElements.push(randomElement);
   }
 
-  return randomArr;
+  return randomElements;
 }
 
 //Устранение дребезга

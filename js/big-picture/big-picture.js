@@ -30,15 +30,15 @@ function putDataIntoBigPicture(data){
 //Проверка на полную загрузку комментариев
 function isCommentsFullLoaded(){
   if (currentThumbnailData.comments.length <= sliceCommentsEndNumber) {
-    commentsLoader.removeEventListener('click', renderNumberOfComments);
+    commentsLoader.removeEventListener('click', onCommentsLoaderClick);
     commentsLoader.classList.add('hidden');
   }
 }
 
 //Рендер комментариев при нажатии на "Загрузить еще"
-function renderNumberOfComments(){
+function onCommentsLoaderClick(){
   if (currentThumbnailData.comments.length === sliceCommentsEndNumber) {
-    commentsLoader.removeEventListener('click', renderNumberOfComments);
+    commentsLoader.removeEventListener('click', onCommentsLoaderClick);
     return;
   }
 
@@ -65,7 +65,7 @@ function renderBigPicture(currentThumbnail){
   putDataIntoBigPicture(currentThumbnailData);
 
   commentsContainer.innerHTML = '';
-  commentsLoader.addEventListener('click', renderNumberOfComments);
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
   renderComments(currentThumbnailData, sliceCommentsStartNumber, sliceCommentsEndNumber, commentsContainer);
 
   commentsLoader.classList.remove('hidden');

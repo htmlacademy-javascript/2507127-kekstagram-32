@@ -15,8 +15,8 @@ const filterButtons = filtersContainer.querySelectorAll('form .img-filters__butt
 
 const activeClass = 'img-filters__button--active';
 
-function sortDataByComments(array){
-  return array.slice().sort((a, b) => b.comments.length - a.comments.length);
+function sortDataByComments(data){
+  return data.slice().sort((objectA, objectB) => objectB.comments.length - objectA.comments.length);
 }
 
 //Добавление активного класса для нажатой кнопки / удаление у остальных кнопок
@@ -48,7 +48,7 @@ function changeFilter(button){
 //Использую debounce здесь, чтобы кнопки фильтра меняли активный класс без задержки
 const debouncedChangeFilter = debounce(changeFilter);
 
-function onChangeFilter(evt){
+function onFiltersClick(evt){
   //Условие, чтобы обработчик не сработал при нажатии на активную кнопку
   const isTargetButton = evt.target.closest('.img-filters__button') && !evt.target.closest('.img-filters__button').classList.contains(activeClass);
   if (isTargetButton) {
@@ -65,7 +65,7 @@ function renderFilteredThumbnails() {
 
     filtersContainer.classList.remove('img-filters--inactive');
 
-    filtersContainer.addEventListener('click', onChangeFilter);
+    filtersContainer.addEventListener('click', onFiltersClick);
   }
 }
 

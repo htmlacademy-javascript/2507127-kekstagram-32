@@ -1,8 +1,8 @@
 
 //Находим нужный объект в массиве сгенерированных данных
-function getCurrentThumbnailData(dataArray, currentThumbnail){
-  for(let i = 0; i < dataArray.length; i++) {
-    const obj = dataArray[i];
+function getCurrentThumbnailData(thumbnails, currentThumbnail){
+  for(let i = 0; i < thumbnails.length; i++) {
+    const obj = thumbnails[i];
     const currentThumbnaillId = Number(currentThumbnail.dataset.thumbnailId);
     if (currentThumbnaillId === obj.id) {
       return obj;
